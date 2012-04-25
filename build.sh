@@ -88,13 +88,13 @@ git config --global user.email jenkins@cvpcs.org
 
 ##### REPO INIT #####
 
+# make sure we have our android directory
+mkdir -p ${ANDROID_DIR}
+
 # bootstrap if we are told to
-if [ ! -d ${ANDROID_DIR} ] ; then
-  mkdir -p ${ANDROID_DIR}
-  if [ ! -z "${BOOTSTRAP}" -a -d "${BOOTSTRAP}" ] ; then
-    echo Bootstrapping repo with: ${BOOTSTRAP}
-    cp -R ${BOOTSTRAP}/.repo android
-  fi
+if [ ! -z "${BOOTSTRAP}" -a -d "${BOOTSTRAP}" ] ; then
+  echo Bootstrapping repo with: ${BOOTSTRAP}
+  cp -R ${BOOTSTRAP}/.repo android
 fi
 
 # from this point on we sit in ${ANDROID_DIR}
