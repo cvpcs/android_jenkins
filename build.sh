@@ -31,8 +31,8 @@ else
 fi
 
 if [ -z "${CLEAN_TYPE}" ] ; then
-  echo CLEAN_TYPE not specified. Defaulting to \"clobber\"
-  export CLEAN_TYPE="clobber"
+  echo CLEAN_TYPE not specified. Defaulting to \"installclean\"
+  export CLEAN_TYPE="installclean"
 else
   echo Using CLEAN_TYPE = \"${CLEAN_TYPE}\"
 fi
