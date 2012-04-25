@@ -140,7 +140,7 @@ rm -f ${OUT}/update*.zip*
 make ${CLEAN_TYPE}
 
 # build
-mka bacon recoveryzip recoveryimage checkapi
+mka bacon recoveryzip recoveryimage
 check_result Build failed.
 
 ##### ARCHIVE #####
