@@ -44,16 +44,16 @@ else
   echo CCACHE_DIR not specified. Disabling CCACHE
 fi
 
+##### ENVIRONMENT SETUP #####
+
+# get into the workspace
+cd ${WORKSPACE}
+
 # override these since we need them below
 export JENKINS_DIR=$(cd $(dirname $0) && pwd)
 export ANDROID_DIR=${WORKSPACE}/android
 export BIN_DIR=${WORKSPACE}/bin
 export ARCHIVE_DIR=${WORKSPACE}/archive
-
-##### ENVIRONMENT SETUP #####
-
-# get into the workspace
-cd ${WORKSPACE}
 
 # colorization fix in Jenkins
 export CL_PFX="\"\033[34m\""
@@ -68,8 +68,8 @@ mkdir -p ${ARCHIVE_DIR}
 export BUILD_NO=${BUILD_NUMBER}
 unset BUILD_NUMBER
 
-# add to our path
-export PATH=${BIN_DIR}:${PATH}
+# modify our path
+export PATH="${BIN_DIR}:${PATH}:/opt/local/bin/:${WORKSPACE}/android/prebuilt/$(uname|awk '{print tolower($0)}')-x86/ccache"
 
 # don't build with colors
 export BUILD_WITH_COLORS=0
@@ -102,9 +102,6 @@ cd ${ANDROID_DIR}
 
 # repo init
 repo init -u http://github.com/CyanogenMod/android.git -b ics
-
-# make sure ccache is in PATH in case we use it
-export PATH="${PATH}:/opt/local/bin/:${WORKSPACE}/android/prebuilt/$(uname|awk '{print tolower($0)}')-x86/ccache"
 
 # copy local_manifest from jenkins
 if [ -f ${JENKINS_DIR}/local_manifest.xml ] ; then
@@ -146,7 +143,7 @@ check_result Build failed.
 ##### ARCHIVE #####
 
 # copy our output artifacts
-cp ${OUT}/update*.zip* ${ARCHIVE_DIR}
+cp ${OUT}/*-CM9-*-UNOFFICIAL.zip* ${ARCHIVE_DIR}
 if [ -f ${OUT}/utilties/update.zip ] ; then
   cp ${OUT}/utilties/update.zip ${ARCHIVE_DIR}/recovery.zip
 fi
@@ -155,7 +152,7 @@ if [ -f ${OUT}/recovery.img ] ; then
 fi
 
 # archive the build.prop as well
-unzip -c $(ls ${ARCHIVE_DIR}/update*.zip) system/build.prop > ${ARCHIVE_DIR}/build.prop
+unzip -c $(ls ${ARCHIVE_DIR}/*-CM9-*-UNOFFICIAL.zip) system/build.prop > ${ARCHIVE_DIR}/build.prop
 
 # chmod the files in case UMASK blocks permissions
 chmod -R ugo+r ${ARCHIVE_DIR}
