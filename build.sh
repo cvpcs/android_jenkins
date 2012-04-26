@@ -7,6 +7,12 @@ function check_result {
   fi
 }
 
+function set_node_env {
+  if [ ! -z "$(eval echo \$\{android_sts_ics_${1}\})" ] ; then
+    eval export ${1}=\$\{android_sts_ics_${1}\}
+  fi
+}
+
 ##### VARIABLE CHECKS #####
 
 # The following variables are used throughout the script:
@@ -30,6 +36,7 @@ else
   echo Using LUNCH = \"${LUNCH}\"
 fi
 
+set_node_env CLEAN_TYPE
 if [ -z "${CLEAN_TYPE}" ] ; then
   echo CLEAN_TYPE not specified. Defaulting to \"installclean\"
   export CLEAN_TYPE="installclean"
@@ -37,6 +44,7 @@ else
   echo Using CLEAN_TYPE = \"${CLEAN_TYPE}\"
 fi
 
+set_node_env CCACHE_DIR
 if [ ! -z "${CCACHE_DIR}" ] ; then
   echo Using CCACHE_DIR = \"${CCACHE_DIR}\"
   export USE_CCACHE=1
