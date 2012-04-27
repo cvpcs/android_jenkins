@@ -58,7 +58,7 @@ fi
 cd ${WORKSPACE}
 
 # override these since we need them below
-export JENKINS_DIR=$(cd $(dirname $0) && pwd)
+export JENKINS_DIR=${WORKSPACE}/jenkins
 export ANDROID_DIR=${WORKSPACE}/android
 export BIN_DIR=${WORKSPACE}/bin
 export ARCHIVE_DIR=${WORKSPACE}/archive
