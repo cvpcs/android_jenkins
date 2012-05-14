@@ -38,8 +38,8 @@ fi
 
 set_node_env CLEAN_TYPE
 if [ -z "${CLEAN_TYPE}" ] ; then
-  echo CLEAN_TYPE not specified. Defaulting to \"installclean\"
-  export CLEAN_TYPE="installclean"
+  echo CLEAN_TYPE not specified. Defaulting to \"clobber\"
+  export CLEAN_TYPE="clobber"
 else
   echo Using CLEAN_TYPE = \"${CLEAN_TYPE}\"
 fi
