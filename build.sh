@@ -123,7 +123,7 @@ curl https://raw.github.com/STS-Dev-Team/android_local_STS/ics/local_manifest.xm
 
 # sync
 echo Syncing...
-repo sync -d -c
+repo sync -d #> /dev/null 2> /dev/null
 check_result repo sync failed.
 echo Sync complete.
 
