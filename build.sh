@@ -111,16 +111,14 @@ cd ${ANDROID_DIR}
 # repo init
 repo init -u http://github.com/CyanogenMod/android.git -b ics
 
-# copy local_manifest from jenkins
-if [ -f ${JENKINS_DIR}/local_manifest.xml ] ; then
-  cp ${JENKINS_DIR}/local_manifest.xml .repo/local_manifest.xml
-fi
+# copy local_manifest from STS-Dev-Team
+curl https://raw.github.com/STS-Dev-Team/android_local_STS/ics/local_manifest.xml > .repo/local_manifest.xml
 
 ##### REPO SYNC #####
 
 # sync
 echo Syncing...
-repo sync -d > /dev/null 2> /dev/null
+repo sync -d #> /dev/null 2> /dev/null
 check_result repo sync failed.
 echo Sync complete.
 
