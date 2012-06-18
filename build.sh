@@ -78,25 +78,22 @@ export BUILD_NO=${BUILD_NUMBER}
 unset BUILD_NUMBER
 
 # modify our path
+mkdir -p ${BIN_DIR}
 export PATH="${BIN_DIR}:${PATH}:/opt/local/bin/:${WORKSPACE}/android/prebuilt/$(uname|awk '{print tolower($0)}')-x86/ccache"
 
 # don't build with colors
 export BUILD_WITH_COLORS=0
 
 # find REPO
-REPO=$(which repo)
-if [ -z "${REPO}" ] ; then
-  mkdir -p ${BIN_DIR}
-  if [ ! -d ${REPO_DIR} ] ; then
-    git clone https://android.googlesource.com/tools/repo ${REPO_DIR}
-  else
-    pushd ${REPO_DIR}
-    git pull
-    popd
-  fi
-  cp ${REPO_DIR}/repo ${BIN_DIR}/repo
-  chmod a+x ${BIN_DIR}/repo
+if [ ! -d ${REPO_DIR} ] ; then
+  git clone https://android.googlesource.com/tools/repo ${REPO_DIR}
+else
+  pushd ${REPO_DIR}
+  git pull
+  popd
 fi
+cp ${REPO_DIR}/repo ${BIN_DIR}/repo
+chmod a+x ${BIN_DIR}/repo
 
 # set our git configuration names
 git config --global user.name $(whoami)@${NODE_NAME}
