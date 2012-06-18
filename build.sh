@@ -86,7 +86,7 @@ export BUILD_WITH_COLORS=0
 
 # find REPO
 if [ ! -d ${REPO_DIR} ] ; then
-  git clone https://android.googlesource.com/tools/repo ${REPO_DIR}
+  git clone https://gerrit.googlesource.com/git-repo -b stable ${REPO_DIR}
 else
   pushd ${REPO_DIR}
   git pull
