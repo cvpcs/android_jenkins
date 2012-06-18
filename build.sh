@@ -61,6 +61,7 @@ cd ${WORKSPACE}
 export JENKINS_DIR=${WORKSPACE}/jenkins
 export ANDROID_DIR=${WORKSPACE}/android
 export BIN_DIR=${WORKSPACE}/bin
+export REPO_DIR=${WORKSPACE}/repo
 export ARCHIVE_DIR=${WORKSPACE}/archive
 
 # colorization fix in Jenkins
@@ -86,7 +87,14 @@ export BUILD_WITH_COLORS=0
 REPO=$(which repo)
 if [ -z "${REPO}" ] ; then
   mkdir -p ${BIN_DIR}
-  curl https://dl-ssl.google.com/dl/googlesource/git-repo/repo > ${BIN_DIR}/repo
+  if [ ! -d ${REPO_DIR} ] ; then
+    git clone https://android.googlesource.com/tools/repo ${REPO_DIR}
+  else
+    pushd ${REPO_DIR}
+    git pull
+    popd
+  fi
+  cp ${REPO_DIR}/repo ${BIN_DIR}/repo
   chmod a+x ${BIN_DIR}/repo
 fi
 
